@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Klantenonderzoek – Ticketshop Kunst Veredelt Kieldrecht</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f3;
+      --surface: #ffffff;
+      --border: #e2e0da;
+      --text: #1a1917;
+      --muted: #7a7774;
+      --accent: #2d5a3d;
+      --accent-light: #eaf2ec;
+      --accent-hover: #234830;
+      --error: #c0392b;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 16px 80px;
+    }
+
+    header {
+      max-width: 640px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 5vw, 38px);
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    header p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .progress-bar-wrap {
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    form {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 18px 28px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--text);
+    }
+
+    .section-body {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .question label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .question label .required {
+      color: var(--accent);
+      margin-left: 3px;
+    }
+
+    /* Star / Scale */
+    .scale-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .scale-group input[type="radio"] { display: none; }
+
+    .scale-group label {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .scale-group input[type="radio"]:checked + label,
+    .scale-group label:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Yes/No */
+    .yn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .yn-group input[type="radio"] { display: none; }
+
+    .yn-group label {
+      flex: 1;
+      padding: 10px 0;
+      text-align: center;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .yn-group input[type="radio"]:checked + label,
+    .yn-group label:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* NPS */
+    .nps-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nps-group input[type="radio"] { display: none; }
+
+    .nps-group label {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .nps-group input[type="radio"]:checked + label,
+    .nps-group label:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      resize: vertical;
+      min-height: 90px;
+      transition: border-color 0.15s;
+      line-height: 1.6;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    textarea::placeholder { color: var(--muted); }
+
+    /* Conditional reveal */
+    .conditional {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      animation: fadeIn 0.2s ease;
+    }
+
+    .conditional.visible { display: block; }
+
+    .conditional label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Submit */
+    .submit-wrap {
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    button[type="submit"] {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 15px 48px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+
+    button[type="submit"]:hover { background: var(--accent-hover); }
+    button[type="submit"]:active { transform: scale(0.98); }
+    button[type="submit"]:disabled { background: var(--muted); cursor: not-allowed; }
+
+    .submit-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Thank you screen */
+    #thankyou {
+      display: none;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 64px 40px;
+    }
+
+    #thankyou .check {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 28px;
+    }
+
+    #thankyou h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    #thankyou p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .section-body { padding: 20px 18px; }
+      .section-header { padding: 14px 18px; }
+      .nps-group label { width: 40px; height: 40px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand-badge">Klantenonderzoek</div>
+  <h1>Ticketshop Kunst Veredelt Kieldrecht</h1>
+  <p>Help ons onze ticketshop te verbeteren. Dit formulier neemt slechts 3–4 minuten in beslag. Uw antwoorden worden anoniem verwerkt.</p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-meta">
+    <span id="progress-label">Sectie 0 van 5</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<form id="surveyForm" novalidate>
+
+  <!-- SECTION 1 -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Algemeen koopproces</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <label>Hoe gemakkelijk vond u het om tickets te kopen op onze website? <span class="required">*</span></label>
+        <div class="scale-group" id="q1-scale">
+          <input type="radio" name="q1" id="q1-1" value="1"><label for="q1-1">1</label>
+          <input type="radio" name="q1" id="q1-2" value="2"><label for="q1-2">2</label>
+          <input type="radio" name="q1" id="q1-3" value="3"><label for="q1-3">3</label>
+          <input type="radio" name="q1" id="q1-4" value="4"><label for="q1-4">4</label>
+          <input type="radio" name="q1" id="q1-5" value="5"><label for="q1-5">5</label>
+        </div>
+        <div class="scale-labels"><span>Zeer moeilijk</span><span>Zeer gemakkelijk</span></div>
+        <div class="error-msg" id="err-q1">Gelieve een score te kiezen.</div>
+      </div>
+
+      <div class="question">
+        <label>Bent u tijdens het bestelproces ergens vastgelopen?<span class="required">*</span></label>
+        <div class="yn-group">
+          <input type="radio" name="q2" id="q2-ja" value="Ja"><label for="q2-ja">Ja</label>
+          <input type="radio" name="q2" id="q2-nee" value="Nee"><label for="q2-nee">Nee</label>
+        </div>
+        <div class="error-msg" id="err-q2">Gelieve een antwoord te kiezen.</div>
+        <div class="conditional" id="cond-q2">
+          <label>Kunt u beschrijven waar u vastliep?</label>
+          <textarea name="q2_toelichting" placeholder="Beschrijf het probleem hier..."></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Website-ervaring</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <label>Was de informatie over voorstellingen en tickets duidelijk en makkelijk te vinden? <span class="required">*</span></label>
+        <div class="yn-group">
+          <input type="radio" name="q3" id="q3-ja" value="Ja"><label for="q3-ja">Ja</label>
+          <input type="radio" name="q3" id="q3-nee" value="Nee"><label for="q3-nee">Nee</label>
+        </div>
+        <div class="error-msg" id="err-q3">Gelieve een antwoord te kiezen.</div>
+      </div>
+
+      <div class="question">
+        <label>Hoe beoordeelt u de laadsnelheid en het gebruiksgemak van de website? <span class="required">*</span></label>
+        <div class="scale-group">
+          <input type="radio" name="q4" id="q4-1" value="1"><label for="q4-1">1</label>
+          <input type="radio" name="q4" id="q4-2" value="2"><label for="q4-2">2</label>
+          <input type="radio" name="q4" id="q4-3" value="3"><label for="q4-3">3</label>
+          <input type="radio" name="q4" id="q4-4" value="4"><label for="q4-4">4</label>
+          <input type="radio" name="q4" id="q4-5" value="5"><label for="q4-5">5</label>
+        </div>
+        <div class="scale-labels"><span>Zeer slecht</span><span>Uitstekend</span></div>
+        <div class="error-msg" id="err-q4">Gelieve een score te kiezen.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Betalingsproces</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <label>Was het betalingsproces soepel en veilig? <span class="required">*</span></label>
+        <div class="yn-group">
+          <input type="radio" name="q5" id="q5-ja" value="Ja"><label for="q5-ja">Ja</label>
+          <input type="radio" name="q5" id="q5-nee" value="Nee"><label for="q5-nee">Nee</label>
+        </div>
+        <div class="error-msg" id="err-q5">Gelieve een antwoord te kiezen.</div>
+      </div>
+
+      <div class="question">
+        <label>Heeft u suggesties om het betalingsproces te verbeteren?</label>
+        <textarea name="q6" placeholder="Uw suggesties..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Communicatie en service</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <label>Heeft u voldoende informatie ontvangen na uw aankoop (bevestiging, herinnering, etc.)? <span class="required">*</span></label>
+        <div class="yn-group">
+          <input type="radio" name="q7" id="q7-ja" value="Ja"><label for="q7-ja">Ja</label>
+          <input type="radio" name="q7" id="q7-nee" value="Nee"><label for="q7-nee">Nee</label>
+        </div>
+        <div class="error-msg" id="err-q7">Gelieve een antwoord te kiezen.</div>
+      </div>
+
+      <div class="question">
+        <label>Heeft u contact opgenomen met onze klantenservice? <span class="required">*</span></label>
+        <div class="yn-group">
+          <input type="radio" name="q8_contact" id="q8-ja" value="Ja"><label for="q8-ja">Ja</label>
+          <input type="radio" name="q8_contact" id="q8-nee" value="Nee"><label for="q8-nee">Nee</label>
+        </div>
+        <div class="error-msg" id="err-q8">Gelieve een antwoord te kiezen.</div>
+        <div class="conditional" id="cond-q8">
+          <label>Hoe beoordeelt u deze ervaring?</label>
+          <div class="scale-group">
+            <input type="radio" name="q8_score" id="q8s-1" value="1"><label for="q8s-1">1</label>
+            <input type="radio" name="q8_score" id="q8s-2" value="2"><label for="q8s-2">2</label>
+            <input type="radio" name="q8_score" id="q8s-3" value="3"><label for="q8s-3">3</label>
+            <input type="radio" name="q8_score" id="q8s-4" value="4"><label for="q8s-4">4</label>
+            <input type="radio" name="q8_score" id="q8s-5" value="5"><label for="q8s-5">5</label>
+          </div>
+          <div class="scale-labels"><span>Zeer slecht</span><span>Uitstekend</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Algemeen</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="question">
+        <label>Wat vond u het best aan onze ticketshop?</label>
+        <textarea name="q9" placeholder="Deel uw positieve ervaringen..."></textarea>
+      </div>
+
+      <div class="question">
+        <label>Wat kunnen we volgens u verbeteren?</label>
+        <textarea name="q10" placeholder="Uw suggesties zijn welkom..."></textarea>
+      </div>
+
+      <div class="question">
+        <label>Hoe waarschijnlijk is het dat u onze ticketshop aanbeveelt aan anderen? <span class="required">*</span><br>
+          <small style="font-weight:400;color:var(--muted);">0 = Helemaal niet waarschijnlijk &nbsp;·&nbsp; 10 = Zeker aanbevelen</small>
+        </label>
+        <div class="nps-group">
+          <input type="radio" name="q11" id="q11-0" value="0"><label for="q11-0">0</label>
+          <input type="radio" name="q11" id="q11-1" value="1"><label for="q11-1">1</label>
+          <input type="radio" name="q11" id="q11-2" value="2"><label for="q11-2">2</label>
+          <input type="radio" name="q11" id="q11-3" value="3"><label for="q11-3">3</label>
+          <input type="radio" name="q11" id="q11-4" value="4"><label for="q11-4">4</label>
+          <input type="radio" name="q11" id="q11-5" value="5"><label for="q11-5">5</label>
+          <input type="radio" name="q11" id="q11-6" value="6"><label for="q11-6">6</label>
+          <input type="radio" name="q11" id="q11-7" value="7"><label for="q11-7">7</label>
+          <input type="radio" name="q11" id="q11-8" value="8"><label for="q11-8">8</label>
+          <input type="radio" name="q11" id="q11-9" value="9"><label for="q11-9">9</label>
+          <input type="radio" name="q11" id="q11-10" value="10"><label for="q11-10">10</label>
+        </div>
+        <div class="error-msg" id="err-q11">Gelieve een score te kiezen.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button type="submit" id="submitBtn">Enquête versturen</button>
+    <p class="submit-note">Uw antwoorden worden anoniem en veilig verwerkt.</p>
+  </div>
+
+</form>
+
+<!-- Thank You -->
+<div id="thankyou">
+  <div class="check">✓</div>
+  <h2>Hartelijk dank!</h2>
+  <p>Uw antwoorden zijn succesvol verstuurd.<br>We waarderen uw tijd en feedback enorm.</p>
+</div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────────────────────
+  // Replace this URL with your own Google Apps Script Web App URL.
+  // See the README comment at the bottom of this file for setup instructions.
+  const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // Conditional reveal: Vastgelopen (q2)
+  document.querySelectorAll('input[name="q2"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const cond = document.getElementById('cond-q2');
+      cond.classList.toggle('visible', r.value === 'Ja' && r.checked);
+    });
+  });
+
+  // Conditional reveal: Klantenservice (q8)
+  document.querySelectorAll('input[name="q8_contact"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const cond = document.getElementById('cond-q8');
+      cond.classList.toggle('visible', r.value === 'Ja' && r.checked);
+    });
+  });
+
+  // Progress bar
+  const requiredFields = ['q1','q2','q3','q4','q5','q7','q8_contact','q11'];
+  function updateProgress() {
+    let filled = 0;
+    requiredFields.forEach(name => {
+      if (document.querySelector(`input[name="${name}"]:checked`)) filled++;
+    });
+    const pct = Math.round((filled / requiredFields.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    // Section count (approx based on answered)
+    const sectionsDone = Math.min(5, Math.ceil(filled / (requiredFields.length / 5)));
+    document.getElementById('progress-label').textContent = `Sectie ${sectionsDone} van 5`;
+  }
+
+  document.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.addEventListener('change', updateProgress);
+  });
+
+  // Validation
+  function validate() {
+    let valid = true;
+    const checks = [
+      { name: 'q1',          errId: 'err-q1' },
+      { name: 'q2',          errId: 'err-q2' },
+      { name: 'q3',          errId: 'err-q3' },
+      { name: 'q4',          errId: 'err-q4' },
+      { name: 'q5',          errId: 'err-q5' },
+      { name: 'q7',          errId: 'err-q7' },
+      { name: 'q8_contact',  errId: 'err-q8' },
+      { name: 'q11',         errId: 'err-q11' },
+    ];
+    checks.forEach(({ name, errId }) => {
+      const el = document.getElementById(errId);
+      const answered = document.querySelector(`input[name="${name}"]:checked`);
+      el.style.display = answered ? 'none' : 'block';
+      if (!answered) valid = false;
+    });
+    return valid;
+  }
+
+  // Collect form data
+  function collectData() {
+    const get = name => {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : '';
+    };
+    const getText = name => {
+      const el = document.querySelector(`textarea[name="${name}"]`);
+      return el ? el.value.trim() : '';
+    };
+    return {
+      timestamp:        new Date().toISOString(),
+      q1_koopgemak:     get('q1'),
+      q2_vastgelopen:   get('q2'),
+      q2_toelichting:   getText('q2_toelichting'),
+      q3_info_duidelijk:get('q3'),
+      q4_website_score: get('q4'),
+      q5_betaling:      get('q5'),
+      q6_betaling_suggestie: getText('q6'),
+      q7_communicatie:  get('q7'),
+      q8_klantenservice:get('q8_contact'),
+      q8_klantenservice_score: get('q8_score'),
+      q9_best:          getText('q9'),
+      q10_verbeteren:   getText('q10'),
+      q11_nps:          get('q11'),
+    };
+  }
+
+  // Submit
+  document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) {
+      document.querySelector('.error-msg[style="display: block;"]')
+        ?.closest('.section-card')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Versturen...';
+
+    const data = collectData();
+
+    if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      // Demo mode: just show thank you
+      console.log("Survey data (demo mode):", data);
+      showThankyou();
+      return;
+    }
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      showThankyou();
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Enquête versturen';
+      alert('Er ging iets mis bij het versturen. Probeer het opnieuw.');
+    }
+  });
+
+  function showThankyou() {
+    document.getElementById('surveyForm').style.display = 'none';
+    document.querySelector('.progress-bar-wrap').style.display = 'none';
+    document.getElementById('thankyou').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+<!--
+════════════════════════════════════════════════════════════════════
+  HOW TO CONNECT TO GOOGLE SHEETS (free, no backend needed)
+════════════════════════════════════════════════════════════════════
+
+STEP 1 – Create a Google Sheet
+  • Go to sheets.google.com and create a new spreadsheet.
+  • Name the columns in Row 1 exactly:
+    timestamp | q1_koopgemak | q2_vastgelopen | q2_toelichting |
+    q3_info_duidelijk | q4_website_score | q5_betaling |
+    q6_betaling_suggestie | q7_communicatie | q8_klantenservice |
+    q8_klantenservice_score | q9_best | q10_verbeteren | q11_nps
+
+STEP 2 – Create a Google Apps Script
+  • In your Sheet: Extensions → Apps Script
+  • Paste this code:
+
+    function doPost(e) {
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      const data = JSON.parse(e.postData.contents);
+      sheet.appendRow([
+        data.timestamp, data.q1_koopgemak, data.q2_vastgelopen,
+        data.q2_toelichting, data.q3_info_duidelijk, data.q4_website_score,
+        data.q5_betaling, data.q6_betaling_suggestie, data.q7_communicatie,
+        data.q8_klantenservice, data.q8_klantenservice_score,
+        data.q9_best, data.q10_verbeteren, data.q11_nps
+      ]);
+      return ContentService.createTextOutput("OK");
+    }
+
+STEP 3 – Deploy as Web App
+  • Click Deploy → New deployment → Type: Web App
+  • Execute as: Me | Who has access: Anyone
+  • Click Deploy and copy the Web App URL
+
+STEP 4 – Paste URL in this file
+  • Replace "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE" near the top of the <script> section
+    with the URL you copied.
+
+STEP 5 – Host on GitHub Pages
+  • Create a repo on github.com (e.g. "kvk-survey")
+  • Upload this file as index.html
+  • Go to Settings → Pages → Branch: main → Save
+  • Your survey will be live at: https://YOUR-USERNAME.github.io/kvk-survey/
+════════════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
